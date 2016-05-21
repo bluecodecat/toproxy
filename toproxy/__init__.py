@@ -1,1 +1,1 @@
-from proxy import run_proxy
+import proxy

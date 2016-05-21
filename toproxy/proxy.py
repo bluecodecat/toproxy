@@ -6,7 +6,7 @@ import os
 import re
 import sys
 import socket
-from urlparse import urlparse
+import urllib.parse
 
 import tornado.httpserver
 import tornado.ioloop
@@ -150,7 +150,7 @@ class ProxyHandler(tornado.web.RequestHandler):
             upstream.connect((host, int(port)), start_tunnel)
 
 def get_proxy(url):
-    url_parsed = urlparse(url, scheme='http')
+    url_parsed = urllib.parse.urlparse(url, scheme='http')
     proxy_key = '%s_proxy' % url_parsed.scheme
     return os.environ.get(proxy_key)
 
@@ -168,7 +168,7 @@ def base_auth_valid(auth_header):
         return False
 
 def parse_proxy(proxy):
-    proxy_parsed = urlparse(proxy, scheme='http')
+    proxy_parsed = urllib.parse.urlparse(proxy, scheme='http')
     return proxy_parsed.hostname, proxy_parsed.port
 
 def match_white_iplist(clientip):
